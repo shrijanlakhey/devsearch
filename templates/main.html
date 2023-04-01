@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single project</title>
+    <title>DevSearch</title>
 </head>
 <body>
-    {% extends 'main.html' %}
-
+    <h1>Trying out</h1>
+    <!-- every page that inherits from navbar.html will have this navbar -->
+    {% include 'navbar.html' %}
+    
+    
+    <!-- extending -->
     {% block content%}
-        <h1>Single project here</h1>
+
+
     {% endblock content %}
+
+    <p>Footer</p>
 </body>
 </html>
