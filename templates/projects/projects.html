@@ -15,6 +15,16 @@
 
     <p>Hello you are on the {{ page }} page</p>
 
+    <!-- # testing out if statement -->
+    {% if number > 10 %}
+    <p>Number is greater than 10</p>
+    {% elif number == 10 %}
+    <p>Number is exactly 10</p>
+    {% else %}
+    <p>Number is less than 10</p>
+
+    {% endif %}
+
     <h1>Projects here</h1>
     <p>
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, ducimus
