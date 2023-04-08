@@ -37,4 +37,9 @@ def projects(request):
     # message is the key and msg is the value
 
 def project(request, pk):
-    return render(request, 'projects/single-project.html')
+    projectObj = None
+    for i in projectList:
+        # this is how we access the dictionary i['id'] where 'i' iterates through projectList
+        if i['id'] == pk:
+            projectObj = i 
+    return render(request, 'projects/single-project.html', {'project': projectObj})
