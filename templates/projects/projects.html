@@ -32,6 +32,15 @@
         it refers to projectList list
         it is located in view.py -->
         {% for project in projects %}
+
+        <!-- /project/{{ project.id }}
+        the code above is refferring to 
+        path('project/<str:pk>/', views.project, name="project"),
+        this line of code above
+        where
+        project = project 
+        {{ project.id }} = str.pk -->
+        
         <li>Title: <a href="/project/{{ project.id }}">{{ project.title }}</a> --- {{ project.description }}</li>
         {% endfor %}
       </ul>
