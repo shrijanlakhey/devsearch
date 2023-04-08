@@ -20,8 +20,6 @@ projectList = [
         'title': 'Social Network',
         'description': 'Awesome open source project I am still working on it'
     },
-
-
 ]
 
 # we access a dictonary's value in template by its key

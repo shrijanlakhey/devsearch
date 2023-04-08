@@ -32,7 +32,7 @@
         it refers to projectList list
         it is located in view.py -->
         {% for project in projects %}
-        <li>Title: {{ project.title }} --- {{ project.description }}</li>
+        <li>Title: <a href="/project/{{ project.id }}">{{ project.title }}</a> --- {{ project.description }}</li>
         {% endfor %}
       </ul>
     {% endblock content%}
