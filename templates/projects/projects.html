@@ -41,7 +41,11 @@
         project = project 
         {{ project.id }} = str.pk -->
         
-        <li>Title: <a href="/project/{{ project.id }}">{{ project.title }}</a> --- {{ project.description }}</li>
+        <li>Title: <a href="{% url 'project' project.id %}">{{ project.title }}</a> --- {{ project.description }}</li>
+          <!-- In the url tag in href,
+          'project is the name of th path below(it is located in views.py of the projects folder)'  
+          path('project/<str:pk>/', views.project, name="project") -->
+
         {% endfor %}
       </ul>
     {% endblock content%}
