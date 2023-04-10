@@ -1,6 +1,12 @@
 # devsearch
 
-Learning django
+<h1>Learning django<h1>
 
 devsearch = projects<br>
-projects = app
+projects = app <br>
+
+Run the following commands in terminal:
+<ul>
+    <li>pipenv install mysqlclient</li>
+<ul>
+
