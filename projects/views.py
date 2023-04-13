@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Project
 # Create your views here.
 
 projectList = [
@@ -24,20 +25,14 @@ projectList = [
 
 # we access a dictonary's value in template by its key
 def projects(request):
-    page = 'projects'
-    number = 10
+    projects = Project.objects.all()
     context = {
-        'page': page, 
-        'number': number,
-        'projects': projectList,
+        'projects': projects,
     }
     return render(request, 'projects/projects.html', context)
     # message is the key and msg is the value
 
 def project(request, pk):
-    projectObj = None
-    for i in projectList:
-        # this is how we access the dictionary i['id'] where 'i' iterates through projectList
-        if i['id'] == pk:
-            projectObj = i 
-    return render(request, 'projects/single-project.html', {'project': projectObj})
+    projectObj = Project.objects.get(id = pk)
+    tags = projectObj.tags.all()
+    return render(request, 'projects/single-project.html', {'project': projectObj, 'tags': tags})
