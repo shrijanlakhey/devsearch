@@ -12,42 +12,27 @@
 
     <!-- specifying where this content goes in the main.html template??? -->
     {% block content%}
-
-      <p>Hello you are on the {{ page }} page</p>
-
-      <!-- # testing out if statement -->
-      {% if number > 10 %}
-        <p>Number is greater than 10</p>
-      {% elif number == 10 %}
-        <p>Number is exactly 10</p>
-      {% else %}
-        <p>Number is less than 10</p>
-
-      {% endif %}
-
-      <hr />
       <h1>Projects</h1>
-      <ul>
-        <!-- note: projects is a key in context dictionary
-        it refers to projectList list
-        it is located in view.py -->
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Project</th>
+          <th>Positive Ratio</th>
+          <th>Votes</th>
+          <th></th>
+        </tr>
         {% for project in projects %}
-
-        <!-- /project/{{ project.id }}
-        the code above is refferring to 
-        path('project/<str:pk>/', views.project, name="project"),
-        this line of code above
-        where
-        project = project 
-        {{ project.id }} = str.pk -->
-        
-        <li>Title: <a href="{% url 'project' project.id %}">{{ project.title }}</a> --- {{ project.description }}</li>
-          <!-- In the url tag in href,
-          'project is the name of th path below(it is located in views.py of the projects folder)'  
-          path('project/<str:pk>/', views.project, name="project") -->
-
+          <tr>
+            <td>{{ project.id }}</td>
+            <td>{{ project.title}}</td>
+            <td>{{ project.vote_ratio}}%</td>
+            <td>{{ project.vote_total}}</td>
+            <td>{{ project.created}}</td>
+            <td><a href="{% url 'project' project.id %}">View</a></td>
+            <td></td>
+          </tr>
         {% endfor %}
-      </ul>
+      </table>
     {% endblock content%}
   </body>
 </html>
