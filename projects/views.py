@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Project
+from .forms import ProjectForm
 # Create your views here.
 
 # we access a dictonary's value in template by its key
@@ -17,5 +18,6 @@ def project(request, pk):
     return render(request, 'projects/single-project.html', {'project': projectObj})
 
 def createProject(request):
-    context = {}
-    return render(request, 'projects/project_form.html')
+    form = ProjectForm()
+    context = {'form': form,}
+    return render(request, 'projects/project_form.html', context)
