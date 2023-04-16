@@ -135,6 +135,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 # we don't have to create a folder called staicfiles because django  will automatically create it when we run a command 'python manage.py collectstatic'
 # collectstatic command will take any files or folders that are in static folder and bundel them up into one file and django will take care of it from there
 # everytime you add a new static file, run 'python manage.py collectstatic' command before deploying it
+# advised to run this command only when deploying the website
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
