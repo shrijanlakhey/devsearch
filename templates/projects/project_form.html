@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Project form</h1>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data"><!--enctype="multipart/form-data" is telling  the form to submit some form data or files-->
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" name="" id="" value="submit">

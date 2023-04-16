@@ -24,7 +24,7 @@ def project(request, pk):
 def createProject(request):
     form = ProjectForm()
     if request.method == 'POST':
-        form = ProjectForm(request.POST)
+        form = ProjectForm(request.POST, request.FILES) # request.FILES is getting those files/images sent
         if form.is_valid():
             form.save()
             return redirect('projects')
@@ -37,7 +37,7 @@ def updateProject(request, pk):
     # instead of rendering a form, we are gonna take an instance, it is gonna pre-fill all the form fields of that projects data
     form = ProjectForm(instance=project)
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project) # letting django know which project is being updated
+        form = ProjectForm(request.POST, request.FILES, instance=project) # letting django know which project is being updated
         if form.is_valid():
             form.save()
             return redirect('projects')
