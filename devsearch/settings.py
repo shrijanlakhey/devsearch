@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'devsearch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'devsearch', # name of database
+        'NAME': 'devsearch',  # name of database
         'USER': 'root',
-        'PASSWORD':'',
-        'HOST':'127.0.0.1',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
         # 'PORT': ''
     }
 }
@@ -131,6 +131,12 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+# defines where our static files in production are gonna be
+# we don't have to create a folder called staicfiles because django  will automatically create it when we run a command 'python manage.py collectstatic'
+# collectstatic command will take any files or folders that are in static folder and bundel them up into one file and django will take care of it from there
+# everytime you add a new static file, run 'python manage.py collectstatic' command before deploying it
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
