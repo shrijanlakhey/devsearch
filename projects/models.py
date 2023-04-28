@@ -1,9 +1,12 @@
 from django.db import models
 import uuid
+from users.models import Profile
 # Create your models here.
 
 
 class Project(models.Model):
+    # one to many relation ship (one profile many projects)
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     # since this image is in images folder we dont need to specify path for it, eg, if it was in a folder named profile picure then our path would be "profile picture/default.jpg"
