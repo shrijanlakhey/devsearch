@@ -1,2 +1,7 @@
 /templates/form-template.html
+/templates/profile.html
 /.vscode
+/users/migrations
+/users/__pycache__
+/projects/__pycache__
+/projects/migrations
