@@ -1,7 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h1>Users Profile</h1>
     <!-- Main Section -->
     <main class="home">
         <section class="hero-section text-center">
@@ -32,7 +31,7 @@
                     {% for profile in profiles %}
                         <div class="column card">
                             <div class="dev">
-                                <a href="/profile.html" class="card__body">
+                                <a href="{%url 'user-profile' profile.id %}" class="card__body">
                                     <div class="dev__profile">
                                         <img class="avatar avatar--md" src="{{ profile.profile_image.url }}" alt="image" />
                                         <div class="dev__meta">
@@ -44,9 +43,13 @@
                                         {{ profile.bio|slice:"150" }} <!--limiting the total number of words allowed in bio, i.e. 150 -->
                                     </p>
                                     <div class="dev__skills">
-                                        {% for tag in tags %}
+                                        {% for skill in profile.skill_set.all %} <!-- going into all the profile skills-->
+                                        <!-- we can get the child objects by adding in child-model-name_set.all-->
+                                        <!--Note: child-model-name = Skill 
+                                            since child = Skill and 
+                                            parent = Profile -->
                                             <span class="tag tag--pill tag--main">
-                                                <small>{{ profile.tag }}</small>
+                                                <small>{{ skill }}</small>
                                             </span>
                                         {% endfor %}
                                     </div>
