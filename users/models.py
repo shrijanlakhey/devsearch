@@ -56,11 +56,17 @@ class Skill(models.Model):
 # sender = model taht actually sends it, instance = the instance/object of the model that actually triggered it, created = T or F value that lets us know if a user or model was added to the b or it was simply savced again
 
 # @receiver is a decorator
-@receiver(post_save, sender=Profile)
-def profileUpdated(sender, instance, created, **kwargs):
-    print("Profile Saved!")
-    print("Instance:", instance)
-    print("Created:", created)
+# @receiver(post_save, sender=Profile)
+def createProfile(sender, instance, created, **kwargs):
+    if created: # checks if this is the first instance, return true if it is first instance
+        user = instance # sender is gonna be an instance
+        # everytime a user is created, their profile is also created
+        profile = Profile.objects.create(
+            user = user, # a profile needs a user so connecting the new profile to the user that just triggered this
+            username = user.username,
+            email = user.email,
+            name = user.first_name,
+        )
 
 
 # delete the corresponding user everytime a profile is deleted
@@ -68,9 +74,9 @@ def deleteUser(sender, instance, **kwargs):
     print("Deleting user...")
 
 
-# everytime a save method is called in the model 'Profle', after the save method is complete the profileUpdated method will be triggered
-# post_save.connect(profileUpdated, sender=Profile)
+# everytime a User model gets created, a profile will be created too
+post_save.connect(createProfile, sender=User)
 
-# post_delete.connect(deleteUser,sender=Profile)
+post_delete.connect(deleteUser,sender=Profile)
 
 
