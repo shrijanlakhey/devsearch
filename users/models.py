@@ -58,25 +58,24 @@ class Skill(models.Model):
 # @receiver is a decorator
 # @receiver(post_save, sender=Profile)
 def createProfile(sender, instance, created, **kwargs):
-    if created: # checks if this is the first instance, return true if it is first instance
-        user = instance # sender is gonna be an instance
+    if created:  # checks if this is the first instance, return true if it is first instance
+        user = instance  # sender is gonna be an instance i.e User
         # everytime a user is created, their profile is also created
         profile = Profile.objects.create(
-            user = user, # a profile needs a user so connecting the new profile to the user that just triggered this
-            username = user.username,
-            email = user.email,
-            name = user.first_name,
+            user=user,  # a profile needs a user so connecting the new profile to the user that just triggered this
+            username=user.username,
+            email=user.email,
+            name=user.first_name,
         )
 
 
 # delete the corresponding user everytime a profile is deleted
 def deleteUser(sender, instance, **kwargs):
-    print("Deleting user...")
+    user = instance.user  # Profile is the instance
+    user.delete()
 
 
 # everytime a User model gets created, a profile will be created too
 post_save.connect(createProfile, sender=User)
 
-post_delete.connect(deleteUser,sender=Profile)
-
-
+post_delete.connect(deleteUser, sender=Profile)
