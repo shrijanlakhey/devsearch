@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+
+from django.db.models.signals import post_save # this method is gonna trigger anytime after a model is saved 
 # Create your models here.
 
 
@@ -31,7 +33,7 @@ class Profile(models.Model):
 
     def __str__(self):
         # if we want to use a number here then we need to wrap that in a string method (str)
-        return str(self.user.username)
+        return str(self.username)
 
 
 class Skill(models.Model):
@@ -46,3 +48,10 @@ class Skill(models.Model):
 
     def __str__(self):
         return str(self.name)
+    
+def profileUpdated(sender, instance, created, **kwargs): # sender = model taht actually sends it, instance = the instance/object of the model that actually triggered it, created = T or F value that lets us know if a user or model was added to the b or it was simply savced again
+    print("Profile Saved!")
+    print("Instance:", instance)
+    print("Created:", created)
+
+post_save.connect(profileUpdated, sender=Profile) # everytime a save method is called in the model 'Profle', after the save method is complete the profileUpdated method will be triggered
