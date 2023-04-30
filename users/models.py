@@ -4,6 +4,8 @@ import uuid
 
 from django.db.models.signals import post_save, post_delete
 # post_save = this method is gonna trigger anytime after a model is saved
+from django.dispatch import receiver
+
 # Create your models here.
 
 
@@ -52,6 +54,9 @@ class Skill(models.Model):
 
 
 # sender = model taht actually sends it, instance = the instance/object of the model that actually triggered it, created = T or F value that lets us know if a user or model was added to the b or it was simply savced again
+
+# @receiver is a decorator
+@receiver(post_save, sender=Profile)
 def profileUpdated(sender, instance, created, **kwargs):
     print("Profile Saved!")
     print("Instance:", instance)
@@ -64,8 +69,8 @@ def deleteUser(sender, instance, **kwargs):
 
 
 # everytime a save method is called in the model 'Profle', after the save method is complete the profileUpdated method will be triggered
-post_save.connect(profileUpdated, sender=Profile)
+# post_save.connect(profileUpdated, sender=Profile)
 
-post_delete.connect(deleteUser,sender=Profile)
+# post_delete.connect(deleteUser,sender=Profile)
 
 
