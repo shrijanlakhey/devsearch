@@ -6,6 +6,9 @@ from . models import Profile
 
 
 def loginUser(request):
+    # redirects the user to profile page if he is logged in and he cannot access login page
+    if request.user.is_authenticated:
+        return redirect('profiles')
     if request.method == "POST":
         # print(request.POST)
         username = request.POST['username']
