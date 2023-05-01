@@ -5,7 +5,7 @@ from . models import Profile
 # Create your views here.
 
 
-def loginPage(request):
+def loginUser(request):
     if request.method == "POST":
         # print(request.POST)
         username = request.POST['username']
@@ -28,6 +28,9 @@ def loginPage(request):
             print("Username or password was incorrect")
     return render(request, 'users/login_register.html')
 
+def logoutUser(request):
+    logout(request) # delete the session
+    return redirect('login')
 
 def profiles(request):
     profiles = Profile.objects.all()  # getting all the profiles from the db
