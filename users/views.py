@@ -1,6 +1,32 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 from . models import Profile
 # Create your views here.
+
+
+def loginPage(request):
+    if request.method == "POST":
+        # print(request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.get(username=username)
+        except:
+            print("Username does not exist")
+
+        # takes in the username and password and makes sure that the password matches username and return back either user instance or none
+        user = authenticate(request, username=username, password=password)
+
+        # if user exists
+        if user is not None:
+            # this method will create a session for the user in the db and also add that into the browsers cookies
+            login(request, user)
+            return redirect('profiles')
+        else:
+            print("Username or password was incorrect")
+    return render(request, 'users/login_register.html')
 
 
 def profiles(request):
