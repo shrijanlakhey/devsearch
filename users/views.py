@@ -7,6 +7,7 @@ from django.contrib import messages
 
 
 def loginUser(request):
+    page = 'login'
     # redirects the user to profile page if he is logged in and he cannot access login page
     if request.user.is_authenticated:
         return redirect('profiles')
@@ -30,12 +31,20 @@ def loginUser(request):
             return redirect('profiles')
         else:
             messages.error(request,"Username or password was incorrect")
-    return render(request, 'users/login_register.html')
+    context = {
+        'page': page,
+    }
+    return render(request, 'users/login_register.html', context)
 
 def logoutUser(request):
     logout(request) # delete the session
     messages.error(request,"User was logged out")
     return redirect('login')
+
+def registerUser(request):
+    page = 'register'
+    context = {'page': page}
+    return render(request, 'users/login_register.html',context)
 
 def profiles(request):
     profiles = Profile.objects.all()  # getting all the profiles from the db
