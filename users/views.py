@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from . models import Profile
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
@@ -19,7 +20,7 @@ def loginUser(request):
         try:
             user = User.objects.get(username=username)
         except:
-            messages.error(request,"Username does not exist")
+            messages.error(request, "Username does not exist")
 
         # takes in the username and password and makes sure that the password matches username and return back either user instance or none
         user = authenticate(request, username=username, password=password)
@@ -30,21 +31,46 @@ def loginUser(request):
             login(request, user)
             return redirect('profiles')
         else:
-            messages.error(request,"Username or password was incorrect")
+            messages.error(request, "Username or password was incorrect")
     context = {
         'page': page,
     }
     return render(request, 'users/login_register.html', context)
 
+
 def logoutUser(request):
-    logout(request) # delete the session
-    messages.error(request,"User was logged out")
+    logout(request)  # delete the session
+    messages.error(request, "User was logged out")
     return redirect('login')
+
 
 def registerUser(request):
     page = 'register'
-    context = {'page': page}
-    return render(request, 'users/login_register.html',context)
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        # passing the data retrieved from the form
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            # creating an instance of the user or the UserCreationForm()
+            # 'commit = False' will not save the form right away, it will hold a temporarily instance of it so that we can further make changes to the data retrieved like below then only save it io the db
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()  # finally saving the data to the db
+
+            messages.success(request, 'User account was created!')
+
+            # this method will create a session for the user in the db and also add that into the browsers cookies
+            login(request, user)
+            return redirect('profiles')
+        else:
+            messages.error(request, 'An error has occurred during registration!')
+    context = {
+        'page': page,
+        'form': form,
+    }
+    return render(request, 'users/login_register.html', context)
+
 
 def profiles(request):
     profiles = Profile.objects.all()  # getting all the profiles from the db
