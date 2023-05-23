@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
-from . models import Profile
+from .models import Profile
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 # Create your views here.
 
 
@@ -46,13 +46,13 @@ def logoutUser(request):
 
 def registerUser(request):
     page = 'register'
-    form = UserCreationForm()
+    form = CustomUserCreationForm()
 
     if request.method == 'POST':
         # passing the data retrieved from the form
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            # creating an instance of the user or the UserCreationForm()
+            # creating an instance of the user or the CustomUserCreationForm()
             # 'commit = False' will not save the form right away, it will hold a temporarily instance of it so that we can further make changes to the data retrieved like below then only save it io the db
             user = form.save(commit=False)
             user.username = user.username.lower()
